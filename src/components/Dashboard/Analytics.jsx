@@ -15,7 +15,7 @@ const Analytics = () => {
     loadTransactions();
   }, []);
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const userKeyTransaction = currentUser ? `budget_${currentUser.email}` : "budget_guest"
+  const userKeyTransaction = currentUser ? `transactions_${currentUser.email}` : "transactions_guest"
   const loadTransactions = () => {
     const stored = JSON.parse(localStorage.getItem(userKeyTransaction) || '[]');
     setTransactions(stored);
