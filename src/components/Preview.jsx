@@ -6,10 +6,10 @@ const Preview = () => {
       <div className="max-w-7xl mx-auto section-padding">
         {/* Section Header */}
         <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
             See It In <span className="gradient-text">Action</span>
           </h2>
-          <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto px-4">
             Experience the intuitive interface that makes budget tracking effortless. Available on all your devices.
           </p>
         </div>
@@ -17,7 +17,7 @@ const Preview = () => {
         {/* Device Mockups Container */}
         <div className="relative">
           {/* Desktop Mockup */}
-          <div className="relative mx-auto max-w-5xl animate-fade-in">
+          <div className="relative mx-auto max-w-5xl animate-fade-in px-4">
             {/* Browser Frame */}
             <div className="bg-neutral-800 dark:bg-neutral-700 rounded-t-xl p-3">
               <div className="flex items-center gap-2">
@@ -26,8 +26,8 @@ const Preview = () => {
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
-                <div className="flex-1 mx-4">
-                  <div className="bg-neutral-700 dark:bg-neutral-600 rounded-md px-3 py-1 text-xs text-neutral-300 dark:text-neutral-200 text-center">
+                <div className="flex-1 mx-2 sm:mx-4">
+                  <div className="bg-neutral-700 dark:bg-neutral-600 rounded-md px-2 sm:px-3 py-1 text-xs text-neutral-300 dark:text-neutral-200 text-center truncate">
                     app.budgettracker.com/dashboard
                   </div>
                 </div>
@@ -37,60 +37,60 @@ const Preview = () => {
             {/* Screen Content */}
             <div className="bg-white dark:bg-neutral-900 rounded-b-xl shadow-2xl overflow-hidden">
               {/* App Header */}
-              <div className="bg-primary-600 dark:bg-primary-700 px-6 py-4">
+              <div className="bg-primary-600 dark:bg-primary-700 px-4 sm:px-6 py-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 bg-white dark:bg-neutral-800 rounded-lg flex items-center justify-center">
-                      <span className="text-primary-600 dark:text-primary-400 font-bold text-lg">B</span>
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white dark:bg-neutral-800 rounded-lg flex items-center justify-center">
+                      <span className="text-primary-600 dark:text-primary-400 font-bold text-sm sm:text-lg">B</span>
                     </div>
-                    <span className="text-white dark:text-gray-200 font-semibold text-lg">Budget Tracker</span>
+                    <span className="text-white dark:text-gray-200 font-semibold text-sm sm:text-lg">Budget Tracker</span>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 sm:gap-4">
                     <button className="text-white/80 hover:text-white">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                       </svg>
                     </button>
-                    <div className="w-10 h-10 bg-white/20 dark:bg-white/10 rounded-full flex items-center justify-center">
-                      <span className="text-white dark:text-gray-200 font-semibold">JD</span>
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 dark:bg-white/10 rounded-full flex items-center justify-center">
+                      <span className="text-white dark:text-gray-200 font-semibold text-sm">JD</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Dashboard Content */}
-              <div className="p-6">
+              <div className="p-3 sm:p-6">
                 {/* Stats Cards */}
-                <div className="grid grid-cols-4 gap-4 mb-6">
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-xl p-4">
-                    <p className="text-green-600 dark:text-green-400 text-sm font-medium mb-1">Total Income</p>
-                    <p className="text-2xl font-bold text-green-700 dark:text-green-300">$8,420</p>
-                    <p className="text-xs text-green-600 dark:text-green-400 mt-2">↑ 12% from last month</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-xl p-3 sm:p-4">
+                    <p className="text-green-600 dark:text-green-400 text-xs sm:text-sm font-medium mb-1">Total Income</p>
+                    <p className="text-xl sm:text-2xl font-bold text-green-700 dark:text-green-300">$8,420</p>
+                    <p className="text-xs text-green-600 dark:text-green-400 mt-1 sm:mt-2">↑ 12% from last month</p>
                   </div>
-                  <div className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-xl p-4">
-                    <p className="text-red-600 dark:text-red-400 text-sm font-medium mb-1">Total Expenses</p>
-                    <p className="text-2xl font-bold text-red-700 dark:text-red-300">$5,320</p>
-                    <p className="text-xs text-red-600 dark:text-red-400 mt-2">↓ 8% from last month</p>
+                  <div className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-xl p-3 sm:p-4">
+                    <p className="text-red-600 dark:text-red-400 text-xs sm:text-sm font-medium mb-1">Total Expenses</p>
+                    <p className="text-xl sm:text-2xl font-bold text-red-700 dark:text-red-300">$5,320</p>
+                    <p className="text-xs text-red-600 dark:text-red-400 mt-1 sm:mt-2">↓ 8% from last month</p>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-xl p-4">
-                    <p className="text-blue-600 dark:text-blue-400 text-sm font-medium mb-1">Savings</p>
-                    <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">$3,100</p>
-                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">↑ 23% from last month</p>
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-xl p-3 sm:p-4">
+                    <p className="text-blue-600 dark:text-blue-400 text-xs sm:text-sm font-medium mb-1">Savings</p>
+                    <p className="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-300">$3,100</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1 sm:mt-2">↑ 23% from last month</p>
                   </div>
-                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-xl p-4">
-                    <p className="text-purple-600 dark:text-purple-400 text-sm font-medium mb-1">Budget Used</p>
-                    <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">63%</p>
-                    <div className="w-full bg-purple-200 dark:bg-purple-700 rounded-full h-2 mt-2">
+                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-xl p-3 sm:p-4">
+                    <p className="text-purple-600 dark:text-purple-400 text-xs sm:text-sm font-medium mb-1">Budget Used</p>
+                    <p className="text-xl sm:text-2xl font-bold text-purple-700 dark:text-purple-300">63%</p>
+                    <div className="w-full bg-purple-200 dark:bg-purple-700 rounded-full h-2 mt-1 sm:mt-2">
                       <div className="bg-purple-600 dark:bg-purple-400 h-2 rounded-full" style={{width: '63%'}}></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Charts Row */}
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="bg-neutral-50 dark:bg-neutral-800 rounded-xl p-4">
-                    <h3 className="font-semibold text-neutral-800 dark:text-neutral-100 mb-4">Monthly Spending</h3>
-                    <div className="h-48 flex items-end justify-between gap-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="bg-neutral-50 dark:bg-neutral-800 rounded-xl p-3 sm:p-4">
+                    <h3 className="font-semibold text-neutral-800 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Monthly Spending</h3>
+                    <div className="h-32 sm:h-48 flex items-end justify-between gap-1 sm:gap-2">
                       <div className="flex-1 bg-primary-500 dark:bg-primary-400 rounded-t" style={{height: '60%'}}></div>
                       <div className="flex-1 bg-secondary-500 dark:bg-secondary-400 rounded-t" style={{height: '80%'}}></div>
                       <div className="flex-1 bg-primary-500 dark:bg-primary-400 rounded-t" style={{height: '45%'}}></div>
@@ -108,22 +108,42 @@ const Preview = () => {
                     </div>
                   </div>
 
-                  <div className="bg-neutral-50 dark:bg-neutral-800 rounded-xl p-4">
-                    <h3 className="font-semibold text-neutral-800 dark:text-neutral-100 mb-4">Top Categories</h3>
-                    <div className="space-y-3">
-                      {/* Repeat category items with dark mode compatible colors */}
+                  <div className="bg-neutral-50 dark:bg-neutral-800 rounded-xl p-3 sm:p-4">
+                    <h3 className="font-semibold text-neutral-800 dark:text-neutral-100 mb-3 sm:mb-4 text-sm sm:text-base">Top Categories</h3>
+                    <div className="space-y-2 sm:space-y-3">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-blue-500 dark:bg-blue-700 rounded-lg flex items-center justify-center">
-                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 dark:bg-blue-700 rounded-lg flex items-center justify-center">
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                             </svg>
                           </div>
-                          <span className="text-sm font-medium dark:text-neutral-200">Housing</span>
+                          <span className="text-xs sm:text-sm font-medium dark:text-neutral-200">Housing</span>
                         </div>
-                        <span className="text-sm font-semibold dark:text-neutral-100">$1,850</span>
+                        <span className="text-xs sm:text-sm font-semibold dark:text-neutral-100">$1,850</span>
                       </div>
-                      {/* Repeat other categories similarly */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 dark:bg-green-700 rounded-lg flex items-center justify-center">
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                            </svg>
+                          </div>
+                          <span className="text-xs sm:text-sm font-medium dark:text-neutral-200">Food</span>
+                        </div>
+                        <span className="text-xs sm:text-sm font-semibold dark:text-neutral-100">$820</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 dark:bg-purple-700 rounded-lg flex items-center justify-center">
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM10 12a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          <span className="text-xs sm:text-sm font-medium dark:text-neutral-200">Transport</span>
+                        </div>
+                        <span className="text-xs sm:text-sm font-semibold dark:text-neutral-100">$540</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -131,8 +151,8 @@ const Preview = () => {
             </div>
           </div>
 
-          {/* Mobile Mockup */}
-          <div className="absolute -bottom-10 -right-10 w-64 animate-fade-in animation-delay-400 hidden lg:block">
+          {/* Mobile Mockup - Hidden on small screens, visible on large screens */}
+          <div className="absolute -bottom-10 -right-10 w-64 animate-fade-in animation-delay-400 hidden xl:block">
             <div className="bg-neutral-900 dark:bg-neutral-800 rounded-3xl p-2 shadow-2xl">
               <div className="bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden">
                 {/* Mobile Content */}
@@ -141,6 +161,15 @@ const Preview = () => {
                     <p className="text-sm text-neutral-600 dark:text-neutral-300">Available Balance</p>
                     <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">$3,100</p>
                   </div>
+                  {/* Mini chart for mobile */}
+                  <div className="mt-6">
+                    <div className="h-20 flex items-end justify-between gap-1">
+                      <div className="flex-1 bg-primary-400 rounded-t" style={{height: '60%'}}></div>
+                      <div className="flex-1 bg-secondary-400 rounded-t" style={{height: '80%'}}></div>
+                      <div className="flex-1 bg-primary-400 rounded-t" style={{height: '45%'}}></div>
+                      <div className="flex-1 bg-secondary-400 rounded-t" style={{height: '70%'}}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -148,8 +177,34 @@ const Preview = () => {
         </div>
 
         {/* Platform Availability */}
-        <div className="mt-20 text-center">
-          <p className="text-neutral-600 dark:text-neutral-300 mb-6">Available on all platforms</p>
+        <div className="mt-16 sm:mt-20 text-center">
+          <p className="text-neutral-600 dark:text-neutral-300 mb-6 px-4">Available on all platforms</p>
+          <div className="flex justify-center gap-6 sm:gap-8">
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-neutral-600 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                </svg>
+              </div>
+              <span className="text-sm text-neutral-600 dark:text-neutral-300">Web</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-neutral-600 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.9 17.39c-.26-.8-1.01-1.39-1.9-1.39h-1v-3a1 1 0 0 0-1-1H8v-2h2a1 1 0 0 0 1-1V7h2a2 2 0 0 0 2-2v-.41c2.93 1.18 5 4.05 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
+              </div>
+              <span className="text-sm text-neutral-600 dark:text-neutral-300">Mobile</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-12 h-12 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-neutral-600 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2H0c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2h-4zM4 5h16v11H4V5z"/>
+                </svg>
+              </div>
+              <span className="text-sm text-neutral-600 dark:text-neutral-300">Desktop</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
