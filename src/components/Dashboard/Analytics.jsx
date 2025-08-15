@@ -14,9 +14,10 @@ const Analytics = () => {
   useEffect(() => {
     loadTransactions();
   }, []);
-
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userKeyTransaction = currentUser ? `budget_${currentUser.email}` : "budget_guest"
   const loadTransactions = () => {
-    const stored = JSON.parse(localStorage.getItem('transactions') || '[]');
+    const stored = JSON.parse(localStorage.getItem(userKeyTransaction) || '[]');
     setTransactions(stored);
   };
 
@@ -200,231 +201,282 @@ const Analytics = () => {
   return (
     <div className="p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-600 mt-1">Detailed insights into your financial patterns</p>
-        </div>
-        <select
-          value={timeRange}
-          onChange={(e) => setTimeRange(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        >
-          <option value="30days">Last 30 Days</option>
-          <option value="3months">Last 3 Months</option>
-          <option value="6months">Last 6 Months</option>
-          <option value="1year">Last Year</option>
-        </select>
-      </div>
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
+  <div>
+    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Analytics</h1>
+    <p className="text-gray-400 mt-1">Detailed insights into your financial patterns</p>
+  </div>
+
+  {/* Container for select + button */}
+  <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+<select
+  value={timeRange}
+  onChange={(e) => setTimeRange(e.target.value)}
+  className="px-3 sm:px-4 py-2 sm:py-2.5 
+             border border-gray-300 dark:border-gray-600 
+             bg-white dark:bg-gray-700 
+             text-gray-900 dark:text-gray-100 
+             rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+>
+  <option value="30days">Last 30 Days</option>
+  <option value="3months">Last 3 Months</option>
+  <option value="6months">Last 6 Months</option>
+  <option value="1year">Last Year</option>
+</select>
+
+    <button
+  onClick={() => setShowAddModal(true)}
+  className="px-4 py-2 bg-primary-600 dark:bg-primary-500 text-white rounded-lg 
+             hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors 
+             flex items-center justify-center gap-2"
+>
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+  Add Transaction
+</button>
+
+  </div>
+</div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-          <p className="text-sm text-gray-600 mb-1">Net Savings</p>
-          <p className={`text-2xl font-bold ${stats.netSavings >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-            ${Math.abs(stats.netSavings).toLocaleString()}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            {stats.savingsRate.toFixed(1)}% savings rate
-          </p>
-        </div>
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-100 dark:border-gray-700">
+    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Net Savings</p>
+    <p className={`text-2xl font-bold ${stats.netSavings >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+      ${Math.abs(stats.netSavings).toLocaleString()}
+    </p>
+    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+      {stats.savingsRate.toFixed(1)}% savings rate
+    </p>
+  </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-          <p className="text-sm text-gray-600 mb-1">Avg Daily Expense</p>
-          <p className="text-2xl font-bold text-gray-900">
-            ${stats.avgDailyExpense.toFixed(2)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">Per day</p>
-        </div>
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-100 dark:border-gray-700">
+    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Daily Expense</p>
+    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      ${stats.avgDailyExpense.toFixed(2)}
+    </p>
+    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Per day</p>
+  </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-          <p className="text-sm text-gray-600 mb-1">Avg Transaction</p>
-          <p className="text-2xl font-bold text-gray-900">
-            ${stats.avgTransaction.toFixed(2)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">Per transaction</p>
-        </div>
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-100 dark:border-gray-700">
+    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Transaction</p>
+    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      ${stats.avgTransaction.toFixed(2)}
+    </p>
+    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Per transaction</p>
+  </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-          <p className="text-sm text-gray-600 mb-1">Total Transactions</p>
-          <p className="text-2xl font-bold text-gray-900">
-            {stats.transactionCount}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">In period</p>
-        </div>
-      </div>
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 border border-gray-100 dark:border-gray-700">
+    <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Transactions</p>
+    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      {stats.transactionCount}
+    </p>
+    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">In period</p>
+  </div>
+</div>
+
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* Income vs Expenses Trend */}
-        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Income vs Expenses Trend</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={incomeExpensesTrend}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="month" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip />
-              <Legend />
-              <Area type="monotone" dataKey="income" stackId="1" stroke="#10b981" fill="#10b981" fillOpacity={0.6} />
-              <Area type="monotone" dataKey="expenses" stackId="2" stroke="#ef4444" fill="#ef4444" fillOpacity={0.6} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+  {/* Income vs Expenses Trend */}
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+      Income vs Expenses Trend
+    </h3>
+    <ResponsiveContainer width="100%" height={300}>
+      <AreaChart data={incomeExpensesTrend}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" className="dark:stroke-gray-700" />
+        <XAxis dataKey="month" stroke="#9ca3af" className="dark:stroke-gray-400" />
+        <YAxis stroke="#9ca3af" className="dark:stroke-gray-400" />
+        <Tooltip />
+        <Legend />
+        <Area
+          type="monotone"
+          dataKey="income"
+          stackId="1"
+          stroke="#10b981"
+          fill="#10b981"
+          fillOpacity={0.6}
+        />
+        <Area
+          type="monotone"
+          dataKey="expenses"
+          stackId="2"
+          stroke="#ef4444"
+          fill="#ef4444"
+          fillOpacity={0.6}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  </div>
 
-        {/* Category Breakdown */}
-        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Expense Categories</h3>
-          {categoryBreakdown.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={categoryBreakdown}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {categoryBreakdown.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-              </PieChart>
-            </ResponsiveContainer>
-          ) : (
-            <div className="flex items-center justify-center h-[300px] text-gray-500">
-              <p>No expense data available</p>
-            </div>
-          )}
-        </div>
+  {/* Category Breakdown */}
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+      Expense Categories
+    </h3>
+    {categoryBreakdown.length > 0 ? (
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            data={categoryBreakdown}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {categoryBreakdown.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+        </PieChart>
+      </ResponsiveContainer>
+    ) : (
+      <div className="flex items-center justify-center h-[300px] text-gray-500 dark:text-gray-400">
+        <p>No expense data available</p>
       </div>
+    )}
+  </div>
+</div>
 
       {/* Additional Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Daily Spending Pattern */}
-        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Daily Spending (Last 30 Days)</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={dailySpending}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="date" stroke="#9ca3af" angle={-45} textAnchor="end" height={60} />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip />
-              <Bar dataKey="amount" fill="#6366f1" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  {/* Daily Spending Pattern */}
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+      Daily Spending (Last 30 Days)
+    </h3>
+    <ResponsiveContainer width="100%" height={250}>
+      <BarChart data={dailySpending}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" className="dark:stroke-gray-700" />
+        <XAxis
+          dataKey="date"
+          stroke="#9ca3af"
+          className="dark:stroke-gray-400"
+          angle={-45}
+          textAnchor="end"
+          height={60}
+        />
+        <YAxis stroke="#9ca3af" className="dark:stroke-gray-400" />
+        <Tooltip />
+        <Bar dataKey="amount" fill="#6366f1" />
+      </BarChart>
+    </ResponsiveContainer>
+  </div>
 
-        {/* Weekday Spending Pattern */}
-        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Average Spending by Weekday</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={weekdaySpending}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="day" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
-              <Bar dataKey="average" fill="#8b5cf6" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+  {/* Weekday Spending Pattern */}
+  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+      Average Spending by Weekday
+    </h3>
+    <ResponsiveContainer width="100%" height={250}>
+      <BarChart data={weekdaySpending}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" className="dark:stroke-gray-700" />
+        <XAxis dataKey="day" stroke="#9ca3af" className="dark:stroke-gray-400" />
+        <YAxis stroke="#9ca3af" className="dark:stroke-gray-400" />
+        <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+        <Bar dataKey="average" fill="#8b5cf6" />
+      </BarChart>
+    </ResponsiveContainer>
+  </div>
+</div>
 
       {/* Top Categories Table */}
-      <div className="mt-6 bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Spending Categories</h3>
-        {topCategories.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="border-b border-gray-200">
-                <tr>
-                  <th className="text-left py-2 text-sm font-medium text-gray-700">Category</th>
-                  <th className="text-right py-2 text-sm font-medium text-gray-700">Amount</th>
-                  <th className="text-right py-2 text-sm font-medium text-gray-700">% of Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topCategories.map((category, index) => {
-                  const percentage = (category.value / stats.totalExpenses * 100).toFixed(1);
-                  return (
-                    <tr key={index} className="border-b border-gray-100">
-                      <td className="py-3 text-sm text-gray-900">{category.name}</td>
-                      <td className="py-3 text-sm text-gray-900 text-right">
-                        ${category.value.toLocaleString()}
-                      </td>
-                      <td className="py-3 text-sm text-gray-600 text-right">{percentage}%</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="text-center py-8 text-gray-500">
-            <p>No spending data available for the selected period</p>
-          </div>
-        )}
-      </div>
-
-      {/* Insights Section */}
-      <div className="mt-6 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg p-6 border border-primary-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Financial Insights</h3>
-        <div className="space-y-3">
-          {stats.savingsRate > 20 ? (
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-green-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <p className="text-sm text-gray-700">
-                Great job! You're saving {stats.savingsRate.toFixed(1)}% of your income, which is above the recommended 20%.
-              </p>
-            </div>
-          ) : stats.savingsRate > 0 ? (
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-yellow-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <p className="text-sm text-gray-700">
-                You're saving {stats.savingsRate.toFixed(1)}% of your income. Consider increasing it to reach the 20% target.
-              </p>
-            </div>
-          ) : (
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-red-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <p className="text-sm text-gray-700">
-                You're spending more than you earn. Review your expenses and look for areas to cut back.
-              </p>
-            </div>
-          )}
-
-          {topCategories.length > 0 && (
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <p className="text-sm text-gray-700">
-                Your highest spending category is {topCategories[0].name} at ${topCategories[0].value.toLocaleString()}.
-              </p>
-            </div>
-          )}
-
-          <div className="flex items-start gap-3">
-            <svg className="w-5 h-5 text-purple-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            <p className="text-sm text-gray-700">
-              Your average daily spending is ${stats.avgDailyExpense.toFixed(2)}, with an average transaction value of ${stats.avgTransaction.toFixed(2)}.
-            </p>
-          </div>
-        </div>
-      </div>
+      <div className="mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Top Spending Categories</h3>
+  {topCategories.length > 0 ? (
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <thead className="border-b border-gray-200 dark:border-gray-600">
+          <tr>
+            <th className="text-left py-2 text-sm font-medium text-gray-700 dark:text-gray-300">Category</th>
+            <th className="text-right py-2 text-sm font-medium text-gray-700 dark:text-gray-300">Amount</th>
+            <th className="text-right py-2 text-sm font-medium text-gray-700 dark:text-gray-300">% of Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {topCategories.map((category, index) => {
+            const percentage = (category.value / stats.totalExpenses * 100).toFixed(1);
+            return (
+              <tr key={index} className="border-b border-gray-100 dark:border-gray-700">
+                <td className="py-3 text-sm text-gray-900 dark:text-gray-100">{category.name}</td>
+                <td className="py-3 text-sm text-gray-900 dark:text-gray-100 text-right">
+                  ${category.value.toLocaleString()}
+                </td>
+                <td className="py-3 text-sm text-gray-600 dark:text-gray-400 text-right">{percentage}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
+  ) : (
+    <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+      <p>No spending data available for the selected period</p>
+    </div>
+  )}
+</div>
+
+{/* Insights Section */}
+<div className="mt-6 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-gray-700 dark:to-gray-800 rounded-lg p-6 border border-primary-200 dark:border-gray-600">
+  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Financial Insights</h3>
+  <div className="space-y-3">
+    {stats.savingsRate > 20 ? (
+      <div className="flex items-start gap-3">
+        <svg className="w-5 h-5 text-green-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Great job! You're saving {stats.savingsRate.toFixed(1)}% of your income, which is above the recommended 20%.
+        </p>
+      </div>
+    ) : stats.savingsRate > 0 ? (
+      <div className="flex items-start gap-3">
+        <svg className="w-5 h-5 text-yellow-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          You're saving {stats.savingsRate.toFixed(1)}% of your income. Consider increasing it to reach the 20% target.
+        </p>
+      </div>
+    ) : (
+      <div className="flex items-start gap-3">
+        <svg className="w-5 h-5 text-red-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          You're spending more than you earn. Review your expenses and look for areas to cut back.
+        </p>
+      </div>
+    )}
+
+    {topCategories.length > 0 && (
+      <div className="flex items-start gap-3">
+        <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Your highest spending category is {topCategories[0].name} at ${topCategories[0].value.toLocaleString()}.
+        </p>
+      </div>
+    )}
+
+    <div className="flex items-start gap-3">
+      <svg className="w-5 h-5 text-purple-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+      <p className="text-sm text-gray-700 dark:text-gray-300">
+        Your average daily spending is ${stats.avgDailyExpense.toFixed(2)}, with an average transaction value of ${stats.avgTransaction.toFixed(2)}.
+      </p>
+    </div>
+  </div>
+</div>
+</div>
   );
 };
 

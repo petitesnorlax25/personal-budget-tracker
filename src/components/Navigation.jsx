@@ -68,15 +68,16 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <button
-                  onClick={() => navigate(currentUser ? '/dashboard' : '/')}
-                  className="text-2xl font-bold gradient-text dark:text-white hover:opacity-80 transition-opacity"
-                >
-                  BudgetTracker
-                </button>
-              </div>
-            </div>
+  <div className="flex-shrink-0">
+    <button
+      onClick={() => navigate(currentUser ? '/dashboard' : '/')}
+      className="text-2xl font-bold gradient-text hover:opacity-80 transition-opacity"
+    >
+      BudgetTracker
+    </button>
+  </div>
+</div>
+
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">

@@ -46,60 +46,62 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="bg-neutral-50">
+    <section id="features" className="bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-neutral-900 dark:to-neutral-800">
       <div className="max-w-7xl mx-auto section-padding">
         {/* Section Header */}
         <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
             Powerful Features for{' '}
             <span className="gradient-text">Smart Budgeting</span>
           </h2>
-          <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+          <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto">
             Everything you need to manage your personal finances in one place. Simple, powerful, and designed for real life.
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className={`card p-8 group hover:scale-105 transition-all duration-300 animate-fade-in`}
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Icon Container */}
-              <div className={`inline-flex p-4 rounded-2xl mb-6 transition-colors duration-300
-                ${feature.color === 'primary' 
-                  ? 'bg-primary-100 text-primary-600 group-hover:bg-primary-600 group-hover:text-white' 
-                  : 'bg-secondary-100 text-secondary-600 group-hover:bg-secondary-600 group-hover:text-white'}`}>
-                {feature.icon}
-              </div>
-              
-              {/* Content */}
-              <h3 className="text-xl font-bold text-neutral-900 mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-neutral-600 leading-relaxed">
-                {feature.description}
-              </p>
-              
-              {/* Learn More Link */}
-              <button className={`mt-6 font-semibold inline-flex items-center gap-2 transition-colors duration-300
-                ${feature.color === 'primary' 
-                  ? 'text-primary-600 hover:text-primary-700' 
-                  : 'text-secondary-600 hover:text-secondary-700'}`}>
-                Learn More
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          ))}
-        </div>
+        {/* Features Grid */}
+<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+  {features.map((feature, index) => (
+    <div
+      key={index}
+      className={`card p-8 group hover:scale-105 transition-all duration-300 animate-fade-in bg-white dark:bg-gray-800`}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      {/* Icon Container */}
+      <div className={`inline-flex p-4 rounded-2xl mb-6 transition-colors duration-300
+        ${feature.color === 'primary' 
+          ? 'bg-primary-100 text-primary-600 group-hover:bg-primary-600 group-hover:text-white dark:bg-primary-900/20 dark:text-primary-400 dark:group-hover:bg-primary-600' 
+          : 'bg-secondary-100 text-secondary-600 group-hover:bg-secondary-600 group-hover:text-white dark:bg-secondary-900/20 dark:text-secondary-400 dark:group-hover:bg-secondary-600'}`}>
+        {feature.icon}
+      </div>
+      
+      {/* Content */}
+      <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">
+        {feature.title}
+      </h3>
+      <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+        {feature.description}
+      </p>
+      
+      {/* Learn More Link */}
+      <button className={`mt-6 font-semibold inline-flex items-center gap-2 transition-colors duration-300
+        ${feature.color === 'primary' 
+          ? 'text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300' 
+          : 'text-secondary-600 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-300'}`}>
+        Learn More
+        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  ))}
+</div>
+
 
         {/* Additional Features List */}
-        <div className="mt-16 bg-white rounded-2xl p-8 shadow-lg">
-          <h3 className="text-2xl font-bold text-neutral-900 mb-6 text-center">
+        <div className="mt-16 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg transition-colors duration-300">
+          <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 text-center">
             And Much More...
           </h3>
           <div className="grid md:grid-cols-3 gap-4">
@@ -118,7 +120,7 @@ const Features = () => {
                 <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                <span className="text-neutral-700">{item}</span>
+                <span className="text-neutral-700 dark:text-neutral-300">{item}</span>
               </div>
             ))}
           </div>

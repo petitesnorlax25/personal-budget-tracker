@@ -217,349 +217,340 @@ const Settings = () => {
     <div className="p-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600 mt-1">Manage your account and preferences</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
+        <p className="text-gray-400 mt-1">Manage your account and preferences</p>
       </div>
 
       {/* Tabs */}
       <div className="border-b border-gray-200 mb-6">
-        <nav className="-mb-px flex space-x-8">
-          {['profile', 'security', 'notifications', 'preferences', 'data'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`py-2 px-1 border-b-2 font-medium text-sm capitalize ${
-                activeTab === tab
-                  ? 'border-primary-500 text-primary-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </nav>
-      </div>
+  <nav className="-mb-px flex flex-wrap gap-2 sm:space-x-8">
+    {['profile', 'security', 'notifications', 'preferences', 'data'].map((tab) => (
+      <button
+        key={tab}
+        onClick={() => setActiveTab(tab)}
+        className={`py-2 px-3 border-b-2 font-medium text-sm capitalize ${
+          activeTab === tab
+            ? 'border-primary-500 text-primary-600'
+            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+        }`}
+      >
+        {tab}
+      </button>
+    ))}
+  </nav>
+</div>
+
 
       {/* Tab Content */}
-      <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-        {/* Profile Tab */}
-        {activeTab === 'profile' && (
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Profile Information</h2>
-            <form onSubmit={handleProfileUpdate} className="space-y-4 max-w-md">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                <input
-                  type="text"
-                  value={profileData.fullName}
-                  onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  value={profileData.email}
-                  disabled
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
-                />
-                <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <input
-                  type="tel"
-                  value={profileData.phone}
-                  onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="+1 (555) 000-0000"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
-                <select
-                  value={profileData.currency}
-                  onChange={(e) => setProfileData({ ...profileData, currency: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                >
-                  <option value="USD">USD ($)</option>
-                  <option value="EUR">EUR (€)</option>
-                  <option value="GBP">GBP (£)</option>
-                  <option value="JPY">JPY (¥)</option>
-                </select>
-              </div>
-              
-              <button
-                type="submit"
-                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Save Changes
-              </button>
-            </form>
-          </div>
-        )}
+      <div className="bg-white dark:bg-gray-700 rounded-lg shadow-sm p-6 border border-gray-100 dark:border-gray-600">
+  {/* Profile Tab */}
+  {activeTab === 'profile' && (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Profile Information</h2>
+      <form onSubmit={handleProfileUpdate} className="space-y-4 max-w-md">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+          <input
+            type="text"
+            value={profileData.fullName}
+            onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                       bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 
+                       focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+        </div>
 
-        {/* Security Tab */}
-        {activeTab === 'security' && (
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Security Settings</h2>
-            <form onSubmit={handlePasswordChange} className="space-y-4 max-w-md">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-                <input
-                  type="password"
-                  value={passwordData.currentPassword}
-                  onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                <input
-                  type="password"
-                  value={passwordData.newPassword}
-                  onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-                <input
-                  type="password"
-                  value={passwordData.confirmPassword}
-                  onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <button
-                type="submit"
-                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Change Password
-              </button>
-            </form>
-            
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <h3 className="text-md font-semibold text-gray-900 mb-2">Two-Factor Authentication</h3>
-              <p className="text-sm text-gray-600 mb-4">Add an extra layer of security to your account</p>
-              <button className="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
-                Enable 2FA
-              </button>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+          <input
+            type="email"
+            value={profileData.email}
+            disabled
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                       bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
+          />
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Email cannot be changed</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+          <input
+            type="tel"
+            value={profileData.phone}
+            onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+            placeholder="+1 (555) 000-0000"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                       bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 
+                       focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Currency</label>
+          <select
+            value={profileData.currency}
+            onChange={(e) => setProfileData({ ...profileData, currency: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                       bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 
+                       focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          >
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="JPY">JPY (¥)</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  )}
+
+  {/* Security Tab */}
+  {activeTab === 'security' && (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Security Settings</h2>
+      <form onSubmit={handlePasswordChange} className="space-y-4 max-w-md">
+        {['currentPassword', 'newPassword', 'confirmPassword'].map((field, i) => (
+          <div key={field}>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {field === 'currentPassword' ? 'Current Password' : field === 'newPassword' ? 'New Password' : 'Confirm New Password'}
+            </label>
+            <input
+              type="password"
+              value={passwordData[field]}
+              onChange={(e) => setPasswordData({ ...passwordData, [field]: e.target.value })}
+              required
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                         bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 
+                         focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+          </div>
+        ))}
+
+        <button
+          type="submit"
+          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          Change Password
+        </button>
+      </form>
+
+      <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
+        <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 mb-2">Two-Factor Authentication</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Add an extra layer of security to your account</p>
+        <button className="px-4 py-2 border border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-700 transition-colors">
+          Enable 2FA
+        </button>
+      </div>
+    </div>
+  )}
+
+  {/* Notifications Tab */}
+  {activeTab === 'notifications' && (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Notification Preferences</h2>
+      <div className="space-y-4 max-w-md">
+        {Object.entries({
+          emailNotifications: 'Email Notifications',
+          budgetAlerts: 'Budget Alerts',
+          weeklyReports: 'Weekly Reports',
+          monthlyReports: 'Monthly Reports',
+          transactionAlerts: 'Transaction Alerts'
+        }).map(([key, label]) => (
+          <div key={key} className="flex items-center justify-between">
+            <div>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {key === 'budgetAlerts' && 'Get notified when you approach budget limits'}
+                {key === 'weeklyReports' && 'Receive weekly spending summaries'}
+                {key === 'monthlyReports' && 'Receive monthly financial reports'}
+                {key === 'transactionAlerts' && 'Get notified for large transactions'}
+                {key === 'emailNotifications' && 'Receive important updates via email'}
+              </p>
             </div>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={notifications[key]}
+                onChange={(e) => setNotifications({ ...notifications, [key]: e.target.checked })}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 dark:bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border dark:after:border-gray-500 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+            </label>
           </div>
-        )}
+        ))}
 
-        {/* Notifications Tab */}
-        {activeTab === 'notifications' && (
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Notification Preferences</h2>
-            <div className="space-y-4 max-w-md">
-              {Object.entries({
-                emailNotifications: 'Email Notifications',
-                budgetAlerts: 'Budget Alerts',
-                weeklyReports: 'Weekly Reports',
-                monthlyReports: 'Monthly Reports',
-                transactionAlerts: 'Transaction Alerts'
-              }).map(([key, label]) => (
-                <div key={key} className="flex items-center justify-between">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">{label}</label>
-                    <p className="text-xs text-gray-500">
-                      {key === 'budgetAlerts' && 'Get notified when you approach budget limits'}
-                      {key === 'weeklyReports' && 'Receive weekly spending summaries'}
-                      {key === 'monthlyReports' && 'Receive monthly financial reports'}
-                      {key === 'transactionAlerts' && 'Get notified for large transactions'}
-                      {key === 'emailNotifications' && 'Receive important updates via email'}
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={notifications[key]}
-                      onChange={(e) => setNotifications({ ...notifications, [key]: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-                  </label>
-                </div>
-              ))}
-              
-              <button
-                onClick={handleNotificationUpdate}
-                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Save Preferences
-              </button>
-            </div>
-          </div>
-        )}
+        <button
+          onClick={handleNotificationUpdate}
+          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          Save Preferences
+        </button>
+      </div>
+    </div>
+  )}
 
-        {/* Preferences Tab */}
-        {activeTab === 'preferences' && (
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">App Preferences</h2>
-            <div className="space-y-4 max-w-md">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date Format</label>
-                <select
-                  value={preferences.dateFormat}
-                  onChange={(e) => setPreferences({ ...preferences, dateFormat: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                >
+  {/* Preferences Tab */}
+  {activeTab === 'preferences' && (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">App Preferences</h2>
+      <div className="space-y-4 max-w-md">
+        {['dateFormat', 'startOfWeek'].map((field) => (
+          <div key={field}>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {field === 'dateFormat' ? 'Date Format' : 'Start of Week'}
+            </label>
+            <select
+              value={preferences[field]}
+              onChange={(e) => setPreferences({ ...preferences, [field]: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                         bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 
+                         focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            >
+              {field === 'dateFormat' ? (
+                <>
                   <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                   <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                   <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Start of Week</label>
-                <select
-                  value={preferences.startOfWeek}
-                  onChange={(e) => setPreferences({ ...preferences, startOfWeek: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                >
+                </>
+              ) : (
+                <>
                   <option value="sunday">Sunday</option>
                   <option value="monday">Monday</option>
-                </select>
-              </div>
-              
-              <div className="space-y-3">
-                {Object.entries({
-                  darkMode: 'Dark Mode',
-                  compactView: 'Compact View',
-                  showDecimals: 'Show Decimal Places'
-                }).map(([key, label]) => (
-                  <div key={key} className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-gray-700">{label}</label>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={preferences[key]}
-                        onChange={(e) => setPreferences({ ...preferences, [key]: e.target.checked })}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-                    </label>
-                  </div>
-                ))}
-              </div>
-              
-              <button
-                onClick={handlePreferencesUpdate}
-                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Save Preferences
-              </button>
-            </div>
+                </>
+              )}
+            </select>
           </div>
-        )}
+        ))}
 
-        {/* Data Tab */}
-        {activeTab === 'data' && (
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Data Management</h2>
-            
-            <div className="space-y-6">
-              {/* Export Data */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-md font-semibold text-gray-900 mb-2">Export Data</h3>
-                <p className="text-sm text-gray-600 mb-4">Download all your financial data as a JSON file</p>
-                <button
-                  onClick={handleExportData}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  Export Data
-                </button>
-              </div>
-              
-              {/* Import Data */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-md font-semibold text-gray-900 mb-2">Import Data</h3>
-                <p className="text-sm text-gray-600 mb-4">Import financial data from a previous export</p>
+        <div className="space-y-3">
+          {Object.entries({
+            darkMode: 'Dark Mode',
+            compactView: 'Compact View',
+            showDecimals: 'Show Decimal Places'
+          }).map(([key, label]) => (
+            <div key={key} className="flex items-center justify-between">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+              <label className="relative inline-flex items-center cursor-pointer">
                 <input
-                  type="file"
-                  accept=".json"
-                  onChange={handleImportData}
-                  className="hidden"
-                  id="import-file"
+                  type="checkbox"
+                  checked={preferences[key]}
+                  onChange={(e) => setPreferences({ ...preferences, [key]: e.target.checked })}
+                  className="sr-only peer"
                 />
-                <label
-                  htmlFor="import-file"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                  </svg>
-                  Import Data
-                </label>
-              </div>
-              
-              {/* Clear Data */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-md font-semibold text-gray-900 mb-2">Clear Data</h3>
-                <p className="text-sm text-gray-600 mb-4">Remove all transactions and budgets (cannot be undone)</p>
-                <button
-                  onClick={handleClearData}
-                  className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
-                >
-                  Clear All Data
-                </button>
-              </div>
-              
-              {/* Delete Account */}
-              <div>
-                <h3 className="text-md font-semibold text-red-600 mb-2">Danger Zone</h3>
-                <p className="text-sm text-gray-600 mb-4">Permanently delete your account and all associated data</p>
-                <button
-                  onClick={() => setShowDeleteModal(true)}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Delete Account
-                </button>
-              </div>
+                <div className="w-11 h-6 bg-gray-200 dark:bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border dark:after:border-gray-500 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+              </label>
             </div>
-          </div>
-        )}
+          ))}
+        </div>
+
+        <button
+          onClick={handlePreferencesUpdate}
+          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          Save Preferences
+        </button>
       </div>
+    </div>
+  )}
+
+  {/* Data Tab */}
+  {activeTab === 'data' && (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Data Management</h2>
+
+      <div className="space-y-6">
+        {/* Export Data */}
+        <div className="border-b border-gray-200 dark:border-gray-600 pb-6">
+          <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 mb-2">Export Data</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Download all your financial data as a JSON file</p>
+          <button
+            onClick={handleExportData}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Export Data
+          </button>
+        </div>
+
+        {/* Import Data */}
+        <div className="border-b border-gray-200 dark:border-gray-600 pb-6">
+          <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 mb-2">Import Data</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Import financial data from a previous export</p>
+          <input type="file" accept=".json" onChange={handleImportData} className="hidden" id="import-file" />
+          <label
+            htmlFor="import-file"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            Import Data
+          </label>
+        </div>
+
+        {/* Clear Data */}
+        <div className="border-b border-gray-200 dark:border-gray-600 pb-6">
+          <h3 className="text-md font-semibold text-gray-900 dark:text-gray-100 mb-2">Clear Data</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Remove all transactions and budgets (cannot be undone)</p>
+          <button
+            onClick={handleClearData}
+            className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
+          >
+            Clear All Data
+          </button>
+        </div>
+
+        {/* Delete Account */}
+        <div>
+          <h3 className="text-md font-semibold text-red-600 mb-2">Danger Zone</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Permanently delete your account and all associated data</p>
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
 
       {/* Delete Account Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Delete Account</h2>
-            <p className="text-gray-600 mb-6">
-              Are you absolutely sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.
-            </p>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowDeleteModal(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDeleteAccount}
-                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Delete Account
-              </button>
-            </div>
-          </div>
-        </div>
+  <div className="bg-white dark:bg-gray-700 rounded-xl max-w-md w-full p-6">
+    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Delete Account</h2>
+    <p className="text-gray-600 dark:text-gray-300 mb-6">
+      Are you absolutely sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.
+    </p>
+    <div className="flex gap-3">
+      <button
+        onClick={() => setShowDeleteModal(false)}
+        className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+      >
+        Cancel
+      </button>
+      <button
+        onClick={handleDeleteAccount}
+        className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+      >
+        Delete Account
+      </button>
+    </div>
+  </div>
+</div>
+
       )}
     </div>
   );

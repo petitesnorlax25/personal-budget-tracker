@@ -6,6 +6,7 @@ import Budgets from './Budgets';
 import Analytics from './Analytics';
 import Settings from './Settings';
 import { useTheme } from '../../context/ThemeContext';
+import DashboardNavbar from './DashboardNavbar';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -162,9 +163,11 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+         <DashboardNavbar currentUser={user} onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/transactions" element={<Transactions />} />

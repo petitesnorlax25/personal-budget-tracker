@@ -16,7 +16,6 @@ const Register = ({ onClose, switchToLogin }) => {
       ...prev,
       [name]: value
     }));
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -27,82 +26,49 @@ const Register = ({ onClose, switchToLogin }) => {
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
+    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
+    if (!formData.password) newErrors.password = 'Password is required';
+    else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+    if (!formData.confirmPassword) newErrors.confirmPassword = 'Please confirm your password';
+    else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsLoading(true);
-
     try {
-      // Get existing users from localStorage
       const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
-      
-      // Check if email already exists
       if (existingUsers.find(user => user.email === formData.email)) {
         setErrors({ email: 'Email already registered' });
         setIsLoading(false);
         return;
       }
 
-      // Create new user object
       const newUser = {
         id: Date.now().toString(),
         fullName: formData.fullName,
         email: formData.email,
-        password: formData.password, // In production, this should be hashed
+        password: formData.password,
         createdAt: new Date().toISOString()
       };
-
-      // Add user to the array
       existingUsers.push(newUser);
-      
-      // Save to localStorage
       localStorage.setItem('users', JSON.stringify(existingUsers));
-      
-      // Store current user session
       localStorage.setItem('currentUser', JSON.stringify({
         id: newUser.id,
         fullName: newUser.fullName,
         email: newUser.email
       }));
 
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Success - redirect to dashboard
       alert('Registration successful! Welcome to Budget Tracker.');
       onClose();
-      window.location.href = '/dashboard'; // Redirect to dashboard
+      window.location.href = '/dashboard';
     } catch (error) {
       setErrors({ general: 'Registration failed. Please try again.' });
     } finally {
@@ -112,11 +78,11 @@ const Register = ({ onClose, switchToLogin }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-md w-full p-8 relative animate-slide-up my-8">
+      <div className="bg-white dark:bg-neutral-800 rounded-2xl max-w-md w-full p-6 relative animate-slide-up my-8 max-h-[90vh] overflow-y-auto">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 transition-colors"
+          className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -124,21 +90,19 @@ const Register = ({ onClose, switchToLogin }) => {
         </button>
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-neutral-900 mb-2">Create Account</h2>
-          <p className="text-neutral-600">Join thousands managing their finances</p>
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Create Account</h2>
+          <p className="text-neutral-600 dark:text-neutral-300">Join thousands managing their finances</p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {errors.general && (
-            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">
-              {errors.general}
-            </div>
+            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm">{errors.general}</div>
           )}
 
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-neutral-700 mb-2">
+            <label htmlFor="fullName" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
               Full Name
             </label>
             <input
@@ -147,18 +111,16 @@ const Register = ({ onClose, switchToLogin }) => {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                errors.fullName ? 'border-red-500' : 'border-neutral-300'
-              }`}
               placeholder="John Doe"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                errors.fullName ? 'border-red-500' : 'border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white'
+              }`}
             />
-            {errors.fullName && (
-              <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>
-            )}
+            {errors.fullName && <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>}
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
               Email Address
             </label>
             <input
@@ -167,18 +129,16 @@ const Register = ({ onClose, switchToLogin }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                errors.email ? 'border-red-500' : 'border-neutral-300'
-              }`}
               placeholder="john@example.com"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                errors.email ? 'border-red-500' : 'border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white'
+              }`}
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-            )}
+            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-neutral-700 mb-2">
+            <label htmlFor="password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
               Password
             </label>
             <input
@@ -187,18 +147,16 @@ const Register = ({ onClose, switchToLogin }) => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                errors.password ? 'border-red-500' : 'border-neutral-300'
-              }`}
               placeholder="••••••••"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                errors.password ? 'border-red-500' : 'border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white'
+              }`}
             />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-            )}
+            {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700 mb-2">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
               Confirm Password
             </label>
             <input
@@ -207,14 +165,12 @@ const Register = ({ onClose, switchToLogin }) => {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                errors.confirmPassword ? 'border-red-500' : 'border-neutral-300'
-              }`}
               placeholder="••••••••"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
+                errors.confirmPassword ? 'border-red-500' : 'border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white'
+              }`}
             />
-            {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
-            )}
+            {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
           </div>
 
           <div className="flex items-center">
@@ -224,7 +180,7 @@ const Register = ({ onClose, switchToLogin }) => {
               className="w-4 h-4 text-primary-600 border-neutral-300 rounded focus:ring-primary-500"
               required
             />
-            <label htmlFor="terms" className="ml-2 text-sm text-neutral-600">
+            <label htmlFor="terms" className="ml-2 text-sm text-neutral-600 dark:text-neutral-300">
               I agree to the{' '}
               <a href="#" className="text-primary-600 hover:text-primary-700">
                 Terms and Conditions
@@ -235,38 +191,35 @@ const Register = ({ onClose, switchToLogin }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary-600 text-white py-3 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-primary-600 text-white py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
         {/* Switch to login */}
-        <div className="mt-6 text-center">
-          <p className="text-neutral-600">
+        <div className="mt-4 text-center">
+          <p className="text-neutral-600 dark:text-neutral-300">
             Already have an account?{' '}
-            <button
-              onClick={switchToLogin}
-              className="text-primary-600 hover:text-primary-700 font-medium"
-            >
+            <button onClick={switchToLogin} className="text-primary-600 hover:text-primary-700 font-medium">
               Sign In
             </button>
           </p>
         </div>
 
-        {/* Social login options */}
-        <div className="mt-6">
+        {/* Social login */}
+        <div className="mt-4">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral-300"></div>
+              <div className="w-full border-t border-neutral-300 dark:border-neutral-600"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-neutral-500">Or register with</span>
+              <span className="px-2 bg-white dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">Or register with</span>
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <button className="flex items-center justify-center px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors">
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <button className="flex items-center justify-center px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -275,7 +228,7 @@ const Register = ({ onClose, switchToLogin }) => {
               </svg>
               Google
             </button>
-            <button className="flex items-center justify-center px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors">
+            <button className="flex items-center justify-center px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors">
               <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/>
               </svg>
