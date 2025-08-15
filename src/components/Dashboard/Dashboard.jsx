@@ -11,6 +11,7 @@ import DashboardNavbar from './DashboardNavbar';
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useTheme();
 
@@ -23,6 +24,24 @@ const Dashboard = () => {
       navigate('/');
     }
   }, [navigate]);
+
+  // Check if screen is mobile size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const mobile = window.innerWidth < 768; // md breakpoint
+      setIsMobile(mobile);
+      // Auto-close sidebar on mobile by default, but keep it open on desktop
+      if (mobile) {
+        setSidebarOpen(false);
+      } else {
+        setSidebarOpen(true);
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const menuItems = [
     {
@@ -81,10 +100,32 @@ const Dashboard = () => {
     window.location.reload();
   };
 
+  const handleMenuItemClick = () => {
+    // Close sidebar on mobile when menu item is clicked
+    if (isMobile) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="relative flex h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      {/* Mobile Backdrop */}
+      {isMobile && sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out`}>
+      <div className={`
+        ${isMobile ? 'fixed' : 'relative'} 
+        ${isMobile ? 'z-50' : ''}
+        ${sidebarOpen ? 'w-64' : (isMobile ? 'w-64' : 'w-20')} 
+        ${isMobile && !sidebarOpen ? '-translate-x-full' : 'translate-x-0'}
+        bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out h-full
+        ${isMobile ? 'left-0 top-0' : ''}
+      `}>
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
           <div className="p-4 border-b dark:border-gray-700">
@@ -127,6 +168,7 @@ const Dashboard = () => {
                   <NavLink
                     to={item.path}
                     end={item.path === '/dashboard'}
+                    onClick={handleMenuItemClick}
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                         isActive
@@ -164,10 +206,24 @@ const Dashboard = () => {
         </div>
       </div>
       
-
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
-         <DashboardNavbar currentUser={user} onLogout={handleLogout} />
+      <div className={`flex-1 overflow-auto bg-gray-50 dark:bg-gray-900 ${isMobile ? 'w-full' : ''}`}>
+        {/* Mobile Menu Button */}
+        {isMobile && (
+          <div className="fixed top-4 left-4 z-30">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        )}
+        <div className={`${isMobile ? 'pt-16' : ''}`}>
+          <DashboardNavbar currentUser={user} onLogout={handleLogout} />
+        </div>
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="/transactions" element={<Transactions />} />
